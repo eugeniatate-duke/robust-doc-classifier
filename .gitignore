@@ -1,7 +1,10 @@
 venv/
 __pycache__/
 *.pyc
-models/*.pt
+# ignore most model files 
+models/*.pt 
+# but allow deployed model to get committed 
+!models/augmented_model.pt
 .ipynb_checkpoints/
 .DS_Store
 .cache/
