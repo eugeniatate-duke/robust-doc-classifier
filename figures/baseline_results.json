@@ -1,54 +1,54 @@
 {
   "model_name": "baseline",
-  "accuracy": 0.47619047619047616,
+  "accuracy": 0.7619047619047619,
   "classification_report": {
     "letter": {
-      "precision": 0.42105263157894735,
-      "recall": 0.4,
-      "f1-score": 0.41025641025641024,
+      "precision": 0.6071428571428571,
+      "recall": 0.85,
+      "f1-score": 0.7083333333333334,
       "support": 20.0
     },
     "form": {
-      "precision": 0.3333333333333333,
-      "recall": 0.44,
-      "f1-score": 0.3793103448275862,
+      "precision": 0.6666666666666666,
+      "recall": 0.48,
+      "f1-score": 0.5581395348837209,
       "support": 25.0
     },
     "email": {
-      "precision": 0.7368421052631579,
-      "recall": 0.7368421052631579,
-      "f1-score": 0.7368421052631579,
+      "precision": 0.8571428571428571,
+      "recall": 0.9473684210526315,
+      "f1-score": 0.9,
       "support": 19.0
     },
     "handwritten": {
-      "precision": 0.38461538461538464,
-      "recall": 0.8333333333333334,
-      "f1-score": 0.5263157894736842,
+      "precision": 0.782608695652174,
+      "recall": 1.0,
+      "f1-score": 0.8780487804878049,
       "support": 18.0
     },
     "advertisement": {
-      "precision": 0.8,
-      "recall": 0.631578947368421,
-      "f1-score": 0.7058823529411765,
+      "precision": 0.9333333333333333,
+      "recall": 0.7368421052631579,
+      "f1-score": 0.8235294117647058,
       "support": 19.0
     },
     "invoice": {
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1-score": 0.0,
+      "precision": 0.8095238095238095,
+      "recall": 0.68,
+      "f1-score": 0.7391304347826086,
       "support": 25.0
     },
-    "accuracy": 0.47619047619047616,
+    "accuracy": 0.7619047619047619,
     "macro avg": {
-      "precision": 0.44597390913180385,
-      "recall": 0.5069590643274854,
-      "f1-score": 0.4597678337936692,
+      "precision": 0.7760697032436162,
+      "recall": 0.7823684210526315,
+      "f1-score": 0.7678635825420289,
       "support": 126.0
     },
     "weighted avg": {
-      "precision": 0.41966240387293025,
-      "recall": 0.47619047619047616,
-      "f1-score": 0.43312171223989304,
+      "precision": 0.771060501495284,
+      "recall": 0.7619047619047619,
+      "f1-score": 0.7551615300050382,
       "support": 126.0
     }
   }

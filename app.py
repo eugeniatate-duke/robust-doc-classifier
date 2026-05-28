@@ -8,7 +8,8 @@ from src.config import SELECTED_CLASSES
 from src.transforms import get_baseline_transforms
 
 
-MODEL_PATH = "models/augmented_model.pt"
+#  MODEL_PATH = "models/augmented_model.pt"
+MODEL_PATH = "models/baseline_model.pt"
 
 # recreate the same model used during training 
 def build_model(num_classes):

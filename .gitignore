@@ -5,6 +5,7 @@ __pycache__/
 models/*.pt 
 # but allow deployed model to get committed 
 !models/augmented_model.pt
+!models/baseline_model.pt
 .ipynb_checkpoints/
 .DS_Store
 .cache/
