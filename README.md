@@ -40,12 +40,12 @@ The project uses MobileNetV2 pretrained on ImageNet as the feature extractor.
 Transfer learning steps:
 
 1. Load pretrained MobileNetV2 weights
-2. Freeze pretrained backbone layers
-3. Replace final classification layer
-4. Train custom classifier head on document images
+2. Freeze most pretrained backbone layers
+3. Unfreeze the final MobileNetV2 blocks for domain adaptation
+4. Replace the final classification layer
+5. Fine-tune the classifier head on document images
 
-This approach allows effective training with limited data and reduced training time.
-
+This approach allowed the pretrained model to better adapt from natural images to document-layout classification while still benefiting from ImageNet feature learning.
 ---
 
 # Data Augmentation Strategy
@@ -84,21 +84,46 @@ The project uses a reduced subset of the RVL-CDIP document image dataset for rap
 - Input size: 224x224
 - Loss function: CrossEntropyLoss
 - Optimizer: Adam
+- Transfer learning with partial backbone fine-tuning
 
 ---
 
 # Results
 
-Two models were trained:
+Two transfer learning models were evaluated:
 
-1. Baseline model
-2. Augmented model
+1. Baseline model: 76.2% accuracy
+2. Augmented model: 67.5% accuracy
 
-The augmented model demonstrated improved robustness to distorted and noisy document images.
+* Transfer learning significantly improved document classification performance.
+* The baseline model achieved the strongest overall performance.
+* The augmented model demonstrated some robustness improvements but aggressive augmentations reduced performance for several visually subtle document classes.
+* Visually similar classes such as invoices, forms, and letters remained challenging due to overlapping layout structures.
 
-Some visually similar classes such as emails and invoices remained challenging due to similar layouts and text-heavy structure.
+Per-Class Observations
 
-This highlights a key real-world challenge in document computer vision systems.
+Strongest classes:
+
+* Email
+* Handwritten
+* Advertisement
+
+Most difficult classes:
+
+* Form
+* Invoice
+
+The baseline model achieved:
+
+* 94.7% recall for emails
+* 100% recall for handwritten documents
+* 68% recall for invoices
+
+One important observation from this project is that pure CNN-based document classifiers rely heavily on layout and visual structure rather than semantic text understanding.
+
+Although the word “INVOICE” may visibly appear in a document image, the model does not explicitly read text because OCR was not used in this prototype.
+
+This explains why visually similar business documents can still be confused despite strong overall performance.
 
 ---
 
@@ -129,19 +154,19 @@ pip install -r requirements.txt
 ## Train baseline model
 
 ```bash
-python train.py --epochs 3 --max-per-class 50
+python train.py --epochs 10 --max-per-class 150
 ```
 
 ## Train augmented model
 
 ```bash
-python train.py --augmented --epochs 3 --max-per-class 50
+python train.py --augmented --epochs 10 --max-per-class 150
 ```
 
 ## Evaluate model
 
 ```bash
-python evaluate.py --model-path models/augmented_model.pt --name augmented
+python evaluate.py --model-path models/baseline_model.pt --name baseline
 ```
 
 ## Run Gradio app locally
@@ -165,12 +190,12 @@ Live Demo:
 
 Potential future improvements include:
 
-- Fine-tuning the full backbone
-- Using larger document datasets
-- Adding Optical Character Recognition features
-- Using transformer-based vision models
-- Improving visually similar class separation
-- Expanding robustness evaluation
+* OCR integration for text-aware classification
+* Vision Transformer (ViT) architectures
+* Multimodal document understanding
+* Larger and more balanced datasets
+* More targeted augmentation strategies
+* Fine-tuning additional backbone layers
 
 ---
 
@@ -183,6 +208,7 @@ Potential future improvements include:
 - Gradio
 - Scikit-learn
 - Matplotlib
+- MobileNetV2 Transfer Learning
 
 ---
 
