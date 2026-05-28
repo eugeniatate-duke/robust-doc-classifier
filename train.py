@@ -16,8 +16,16 @@ def build_model(num_classes):
     # freeze pretrained feature extractor
     for param in model.features.parameters():
         param.requires_grad = False
+    
+    # Unfreeze last few MobileNetV2 blocks
+    for param in model.features[-4:].parameters():
+        param.requires_grad = True
     # replcae final classification layer with a new layer for our doc classes 
-    model.classifier[1] = nn.Linear(model.classifier[1].in_features, num_classes)
+    model.classifier = nn.Sequential(
+        nn.Dropout(0.3),
+        nn.Linear(model.last_channel, num_classes)
+    )
+    #  model.classifier[1] = nn.Linear(model.classifier[1].in_features, num_classes)
     return model
 
 
@@ -77,7 +85,11 @@ def main():
     model = build_model(num_classes=len(SELECTED_CLASSES)).to(device)
     criterion = nn.CrossEntropyLoss()
     # train only classifier model: only update classifier weights and keep pretrained feature extractor unchanged 
-    optimizer = torch.optim.Adam(model.classifier.parameters(), lr=1e-3)
+    # optimizer = torch.optim.Adam(model.classifier.parameters(), lr=1e-3)
+    optimizer = torch.optim.Adam(
+        filter(lambda p: p.requires_grad, model.parameters()),
+        lr=1e-4
+    )
 
     for epoch in range(args.epochs):
         loss, acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
